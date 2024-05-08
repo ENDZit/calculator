@@ -9,10 +9,11 @@ void main() {
 }
 
 class Calculator extends StatefulWidget {
-
+  @override
   CalculatorState createState() => CalculatorState();
 }
 
+@override
 class CalculatorState extends State<Calculator> {
   String num1 = "";
   String operation = "";
@@ -23,30 +24,17 @@ class CalculatorState extends State<Calculator> {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                operation = "";
-                num1 = "";
-              });
+              ac();
             },
             child: Text("AC")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                fullNumber = double.parse(num1);
-                fullNumber /= 100;
-                num1 = fullNumber.toString();
-              });
+              percent();
             },
             child: Text("%")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                if (num1 != "") {
-                  fullNumber = double.parse(num1);
-                }
-                num1 = "";
-                operation = "/";
-              });
+              division();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
@@ -56,36 +44,22 @@ class CalculatorState extends State<Calculator> {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "7";
-              });
+              enterNumber("7");
             },
             child: Text("7")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "8";
-              });
+              enterNumber("8");
             },
             child: Text("8")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "9";
-              });
+              enterNumber("9");
             },
             child: Text("9")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                if (num1 != "") {
-                  fullNumber = double.parse(num1);
-                } else if (num1 == "-") {
-                  num1 = "";
-                }
-                num1 = "";
-                operation = "X";
-              });
+              multiply();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
@@ -95,42 +69,22 @@ class CalculatorState extends State<Calculator> {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "4";
-              });
+              enterNumber("4");
             },
             child: Text("4")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "5";
-              });
+              enterNumber("5");
             },
             child: Text("5")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "6";
-              });
+              enterNumber("6");
             },
             child: Text("6")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                if (num1 == "-") {
-                  num1 = "-";
-                } else if (num1 == "") {
-                  num1 = "-";
-                } else {
-                  fullNumber = double.parse(num1);
-                  num1 = "";
-                }
-                if (operation == "X") {
-                  operation = "X";
-                } else {
-                  operation = "-";
-                }
-              });
+              subtraction();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
@@ -140,36 +94,22 @@ class CalculatorState extends State<Calculator> {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "1";
-              });
+              enterNumber("1");
             },
             child: Text("1")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "2";
-              });
+              enterNumber("2");
             },
             child: Text("2")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                num1 += "3";
-              });
+              enterNumber("3");
             },
             child: Text("3")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                if (num1 != "") {
-                  fullNumber = double.parse(num1);
-                } else if (num1 == "-") {
-                  num1 = "";
-                }
-                num1 = "";
-                operation = "+";
-              });
+              addition();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
@@ -180,35 +120,20 @@ class CalculatorState extends State<Calculator> {
         ElevatedButton(
             onPressed: () {
               setState(() {
-                num1 += "0";
+                enterNumber("0");
               });
             },
             child: Text("0")),
         ElevatedButton(
             onPressed: () {
               setState(() {
-                num1 += ".";
+                enterNumber(".");
               });
             },
             child: Text(".")),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                switch (operation) {
-                  case "X":
-                    fullNumber *= double.parse(num1);
-                    num1 = fullNumber.toString();
-                  case "-":
-                    fullNumber -= double.parse(num1);
-                    num1 = fullNumber.toString();
-                  case "/":
-                    fullNumber /= double.parse(num1);
-                    num1 = fullNumber.toString();
-                  case "+":
-                    fullNumber += double.parse(num1);
-                    num1 = fullNumber.toString();
-                }
-              });
+              equal();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
@@ -216,5 +141,89 @@ class CalculatorState extends State<Calculator> {
             child: Text("=")),
       ]),
     ]);
+  }
+  void enterNumber(String enteredNum){
+    setState(() {
+      num1 += enteredNum;
+    });
+  }
+  void ac(){
+    setState(() {
+      operation = "";
+      num1 = "";
+    });
+  }
+  void percent(){
+    setState(() {
+      fullNumber = double.parse(num1);
+      fullNumber /= 100;
+      num1 = fullNumber.toString();
+    });
+  }
+  void multiply(){
+    setState(() {
+      if (num1 != "") {
+        fullNumber = double.parse(num1);
+      } else if (num1 == "-") {
+        num1 = "";
+      }
+      num1 = "";
+      operation = "X";
+    });
+  }
+  void subtraction(){
+    setState(() {
+      if (num1 == "-") {
+        num1 = "-";
+      } else if (num1 == "") {
+        num1 = "-";
+      } else {
+        fullNumber = double.parse(num1);
+        num1 = "";
+      }
+      if (operation == "X") {
+        operation = "X";
+      } else {
+        operation = "-";
+      }
+    });
+  }
+  void division(){
+    setState(() {
+      if (num1 != "") {
+        fullNumber = double.parse(num1);
+      }
+      num1 = "";
+      operation = "/";
+    });
+  }
+  void addition(){
+    setState(() {
+      if (num1 != "") {
+        fullNumber = double.parse(num1);
+      } else if (num1 == "-") {
+        num1 = "";
+      }
+      num1 = "";
+      operation = "+";
+    });
+  }
+  void equal(){
+    setState(() {
+      switch (operation) {
+        case "X":
+          fullNumber *= double.parse(num1);
+          num1 = fullNumber.toString();
+        case "-":
+          fullNumber -= double.parse(num1);
+          num1 = fullNumber.toString();
+        case "/":
+          fullNumber /= double.parse(num1);
+          num1 = fullNumber.toString();
+        case "+":
+          fullNumber += double.parse(num1);
+          num1 = fullNumber.toString();
+      }
+    });
   }
 }
